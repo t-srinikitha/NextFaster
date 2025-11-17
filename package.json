@@ -14,7 +14,9 @@
     "db:studio": "drizzle-kit studio",
     "outbox:worker": "node scripts/outbox-worker.js",
     "test:purchase": "tsx scripts/test-purchase.ts",
-    "test:e2e": "tsx scripts/test-e2e.ts"
+    "test:e2e": "tsx scripts/test-e2e.ts",
+    "test:prod:purchase": "tsx scripts/test-prod-purchase.ts",
+    "test:prod": "tsx scripts/test-prod-e2e.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.68",
