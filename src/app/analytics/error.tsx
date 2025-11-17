@@ -10,13 +10,15 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Error:", error);
+    console.error("Analytics dashboard error:", error);
   }, [error]);
 
   return (
     <div className="container mx-auto p-8">
       <div className="flex flex-col items-center justify-center h-64">
-        <h2 className="text-2xl font-bold text-red-600 mb-4">Something went wrong!</h2>
+        <h2 className="text-2xl font-bold text-red-600 mb-4">
+          Analytics Dashboard Error
+        </h2>
         <p className="text-gray-600 mb-4">{error.message}</p>
         <button
           onClick={reset}
@@ -28,3 +30,5 @@ export default function Error({
     </div>
   );
 }
+
+

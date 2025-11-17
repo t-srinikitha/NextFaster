@@ -1,5 +1,6 @@
 import { getUser } from "@/lib/queries";
 import { LoginForm, SignInSignUp, SignOut } from "./auth.client";
+import { PlaceOrderButton } from "@/components/place-order-button";
 
 export async function AuthServer() {
   const user = await getUser();
@@ -13,7 +14,7 @@ export async function AuthServer() {
 export async function PlaceOrderAuth() {
   const user = await getUser();
   if (user) {
-    return null;
+    return <PlaceOrderButton />;
   }
   return (
     <>

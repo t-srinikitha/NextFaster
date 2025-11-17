@@ -1,12 +1,15 @@
 import { sql } from "drizzle-orm";
 import {
+  boolean,
   index,
   integer,
+  jsonb,
   numeric,
   pgTable,
   serial,
   text,
   timestamp,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
@@ -154,3 +157,27 @@ export const users = pgTable("users", {
 
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
+
+export const outboxEvents = pgTable(
+  "outbox_events",
+  {
+    id: serial("id").primaryKey(),
+    eventId: uuid("event_id").notNull().unique(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    eventType: text("event_type").notNull(),
+    payload: jsonb("payload").notNull(),
+    sent: boolean("sent").notNull().default(false),
+    sentAt: timestamp("sent_at", { withTimezone: true }),
+  },
+  (table) => ({
+    unsentCreatedIdx: index("idx_outbox_unsent_created").on(
+      table.sent,
+      table.createdAt,
+    ),
+  }),
+);
+
+export type OutboxEvent = typeof outboxEvents.$inferSelect;
+export type NewOutboxEvent = typeof outboxEvents.$inferInsert;

@@ -12,6 +12,7 @@ import { WelcomeToast } from "./welcome-toast";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { PageViewTracker } from "@/components/page-view-tracker";
 
 export const metadata: Metadata = {
   title: {
@@ -84,6 +85,13 @@ export default async function RootLayout({
                     </Link>
                     <Link
                       prefetch={true}
+                      href="/analytics"
+                      className="hidden text-lg text-accent1 hover:underline md:block"
+                    >
+                      ANALYTICS
+                    </Link>
+                    <Link
+                      prefetch={true}
                       href="/order-history"
                       aria-label="Order History"
                       className="block text-lg text-accent1 hover:underline md:hidden"
@@ -125,6 +133,7 @@ export default async function RootLayout({
           <Toaster closeButton />
           <WelcomeToast />
         </Suspense>
+        <PageViewTracker />
         <Analytics scriptSrc="/insights/events.js" endpoint="/hfi/events" />
         <SpeedInsights />
       </body>

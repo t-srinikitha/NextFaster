@@ -11,6 +11,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  transpilePackages: ['zod'],
   images: {
     minimumCacheTTL: 31536000,
     remotePatterns: [

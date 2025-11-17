@@ -1,11 +1,33 @@
 "use client";
 import { useActionState } from "react";
 import { addToCart } from "@/lib/actions";
+import { trackAddToCart } from "@/lib/analytics/client";
 
-export function AddToCartForm({ productSlug }: { productSlug: string }) {
+interface AddToCartFormProps {
+  productSlug: string;
+  productName?: string;
+  price?: number;
+  category?: string;
+}
+
+export function AddToCartForm({ 
+  productSlug, 
+  productName, 
+  price, 
+  category 
+}: AddToCartFormProps) {
   const [message, formAction, isPending] = useActionState(addToCart, null);
+
+  const handleSubmit = async (formData: FormData) => {
+    // Track add to cart event
+    if (productName && price !== undefined) {
+      trackAddToCart(productSlug, productName, price, category);
+    }
+    formAction(formData);
+  };
+
   return (
-    <form className="flex flex-col gap-2" action={formAction}>
+    <form className="flex flex-col gap-2" action={handleSubmit}>
       <input type="hidden" name="productSlug" value={productSlug} />
       <button
         type="submit"

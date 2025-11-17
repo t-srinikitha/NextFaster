@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { AddToCartForm } from "@/components/add-to-cart-form";
 import { Metadata } from "next";
+import { ProductViewTracker } from "@/components/product-view-tracker";
 
 import { getProductDetails, getProductsForSubcategory } from "@/lib/queries";
 // import { db } from "@/db";
@@ -73,6 +74,12 @@ export default async function Page(props: {
 
   return (
     <div className="container p-4">
+      <ProductViewTracker
+        productSlug={productData.slug}
+        productName={productData.name}
+        price={parseFloat(productData.price)}
+        category={category}
+      />
       <h1 className="border-t-2 pt-1 text-xl font-bold text-accent1">
         {productData.name}
       </h1>
@@ -93,7 +100,12 @@ export default async function Page(props: {
         <p className="text-xl font-bold">
           ${parseFloat(productData.price).toFixed(2)}
         </p>
-        <AddToCartForm productSlug={productData.slug} />
+        <AddToCartForm 
+          productSlug={productData.slug}
+          productName={productData.name}
+          price={parseFloat(productData.price)}
+          category={category}
+        />
       </div>
       <div className="pt-8">
         {related.length > 0 && (
